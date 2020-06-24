@@ -5,4 +5,8 @@
     <Copyright>Andrew Shadrin</Copyright>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>
