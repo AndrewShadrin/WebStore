@@ -7,6 +7,7 @@ using WebStore.Models;
 
 namespace WebStore.Controllers
 {
+    //[Route("Users")]
     public class EmployeesController : Controller
     {
         private static readonly List<Employee> employees = new List<Employee>
@@ -37,6 +38,7 @@ namespace WebStore.Controllers
             },
         };
 
+        //[Route("User-{id}")]
         public IActionResult Details(int id)
         {
             var employee = employees.FirstOrDefault(e => e.Id == id);
@@ -46,6 +48,8 @@ namespace WebStore.Controllers
             }
             return View(employee);
         }
+        
+        //[Route("All")]
         public IActionResult Index()
         {
             return View(employees);
