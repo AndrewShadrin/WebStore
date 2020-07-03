@@ -3,9 +3,11 @@
     <div class="container">
         <h3>Сотрудники</h3>
         <hr />
+        <a asp-action="Edit" class="btn btn-primary">Новый сотрудник</a>
         <table class="table">
             <thead>
                 <tr>
+                    <th></th>
                     <th>Id</th>
                     <th>Фамилия</th>
                     <th>Имя</th>
@@ -18,12 +20,13 @@
                 @foreach (var employee in Model)
                 {
                     <tr>
+                        <td><a asp-controller="Employees" asp-action="Details" asp-route-id="@employee.Id">Инф.</a></td>
                         <td>@employee.Id</td>
                         <td>@employee.Surname</td>
                         <td>@employee.Name</td>
                         <td>@employee.Patronymic</td>
                         <td>@employee.Age</td>
-                        <td><a asp-controller="Employees" asp-action="Details" asp-route-id="@employee.Id">Информация</a></td>
+                        <td><a asp-controller="Employees" asp-action="Edit" asp-route-id="@employee.Id">Ред.</a></td>
                     </tr>
                 }
             </tbody>
