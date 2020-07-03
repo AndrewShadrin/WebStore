@@ -118,9 +118,12 @@ namespace WebStore.Controllers
         }
 
         [HttpPost]
-        public IActionResult Delete(int id)
+        public IActionResult DeleteConfirmed(int id)
         {
+            employeesData.Delete(id);
+            employeesData.SaveChanges();
 
+            return RedirectToAction(nameof(Index));
         }
     }
 }
