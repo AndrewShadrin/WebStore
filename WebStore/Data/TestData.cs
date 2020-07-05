@@ -16,7 +16,8 @@ namespace WebStore.Data
                 Name = "Иван",
                 Surname = "Иванов",
                 Patronymic = "Иванович",
-                Age = 39
+                Age = 39,
+                EmploymentDate = DateTime.Now.Subtract(TimeSpan.FromDays(365 * 7))
             },
             new Employee
             {
@@ -24,7 +25,8 @@ namespace WebStore.Data
                 Name = "Пётр",
                 Surname = "Петров",
                 Patronymic = "Петрович",
-                Age = 28
+                Age = 28,
+                EmploymentDate = DateTime.Now.Subtract(TimeSpan.FromDays(250 * 8))
             },
             new Employee
             {
@@ -32,7 +34,8 @@ namespace WebStore.Data
                 Name = "Сидор",
                 Surname = "Сидоров",
                 Patronymic = "Сидорович",
-                Age = 18
+                Age = 18,
+                EmploymentDate = DateTime.Now.Subtract(TimeSpan.FromDays(100 * 2))
             },
         };
 

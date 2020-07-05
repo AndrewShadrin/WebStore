@@ -1,5 +1,5 @@
 ﻿@model EmployeesViewModel
-@{ ViewData["Title"] = "Редактирование сотрудника id:" + Model.id;}
+@{ ViewData["Title"] = "Редактирование сотрудника id:" + Model.Id;}
 
     <div class="container">
         <h3>@ViewData["Title"]</h3>
@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="col-md-4">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input asp-for="id" type="hidden" />
+                    <input asp-for="Id" type="hidden" />
                     <div class="form-group">
                         <label asp-for="LastName" class="control-label"></label>
                         <input asp-for="LastName" class="form-control" />
@@ -29,6 +29,11 @@
                         <label asp-for="Age" class="control-label"></label>
                         <input asp-for="Age" class="form-control" />
                         <span asp-validation-for="Age" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EmploymentDate" class="control-label"></label>
+                        <input asp-for="EmploymentDate" class="form-control" />
+                        <span asp-validation-for="EmploymentDate" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">

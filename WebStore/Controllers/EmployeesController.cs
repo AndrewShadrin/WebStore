@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Models;
 using WebStore.ViewModels;
@@ -15,6 +16,19 @@ namespace WebStore.Controllers
             this.employeesData = employeesData;
         }
 
+        static EmployeesViewModel GetEmployeeViewModel(Employee employee)
+        {
+            return new EmployeesViewModel
+            {
+                Id = employee.Id,
+                FirstName = employee.Name,
+                LastName = employee.Surname,
+                Patronymic = employee.Patronymic,
+                Age = employee.Age,
+                EmploymentDate = employee.EmploymentDate
+            };
+        }
+
         //[Route("User-{id}")]
         public IActionResult Details(int id)
         {
@@ -23,13 +37,14 @@ namespace WebStore.Controllers
             {
                 return NotFound();
             }
-            return View(employee);
+            return View(GetEmployeeViewModel(employee));
+
         }
 
         //[Route("All")]
         public IActionResult Index()
         {
-            return View(employeesData.Get());
+            return View(employeesData.Get().Select(employee => GetEmployeeViewModel(employee)));
         }
 
         #region Edit
@@ -52,14 +67,7 @@ namespace WebStore.Controllers
                 return NotFound();
             }
 
-            return View(new EmployeesViewModel
-            {
-                id = employee.Id,
-                FirstName = employee.Name,
-                LastName = employee.Surname,
-                Patronymic = employee.Patronymic,
-                Age = employee.Age
-            });
+            return View(GetEmployeeViewModel(employee));
         }
 
         [HttpPost]
@@ -70,16 +78,27 @@ namespace WebStore.Controllers
                 throw new ArgumentNullException(nameof(model));
             }
 
+            if (model.Age < 18 || model.Age > 75)
+            {
+                ModelState.AddModelError(nameof(model.Age), "Возраст должен быть в пределах от 18 до 75");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
             var employee = new Employee
             {
-                Id = model.id,
+                Id = model.Id,
                 Name = model.FirstName,
                 Surname = model.LastName,
                 Patronymic = model.Patronymic,
-                Age = model.Age
+                Age = model.Age,
+                EmploymentDate = model.EmploymentDate
             };
 
-            if (model.id == 0)
+            if (model.Id == 0)
             {
                 employeesData.Add(employee);
             }
@@ -106,14 +125,7 @@ namespace WebStore.Controllers
                 return NotFound();
             }
             
-            return View(new EmployeesViewModel
-            {
-                id = employee.Id,
-                FirstName = employee.Name,
-                LastName = employee.Surname,
-                Patronymic = employee.Patronymic,
-                Age = employee.Age
-            });
+            return View(GetEmployeeViewModel(employee));
 
         }
 
