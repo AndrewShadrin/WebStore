@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entities\Base\Entity.cs" />
     <Compile Include="Entities\Base\Interfaces\IEntity.cs" />
     <Compile Include="Entities\Base\Interfaces\INamedEntity.cs" />
     <Compile Include="Entities\Base\Interfaces\IOrderedEntity.cs" />
+    <Compile Include="Entities\Base\NamedEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
