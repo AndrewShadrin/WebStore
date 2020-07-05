@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebStore.Infrastructure.Interfaces;
+using WebStore.Infrastructure.Middleware;
+using WebStore.Infrastructure.Services;
 
 namespace WebStore
 {
@@ -23,6 +26,8 @@ namespace WebStore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+            services.AddScoped<IEmployeesData, InMemoryEmployesData>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -36,6 +41,8 @@ namespace WebStore
             app.UseDefaultFiles();
 
             app.UseRouting();
+
+            //app.UseMiddleware<TestMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
