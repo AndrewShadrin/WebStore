@@ -47,7 +47,9 @@
     <Compile Include="Entities\Base\Interfaces\IOrderedEntity.cs" />
     <Compile Include="Entities\Base\NamedEntity.cs" />
     <Compile Include="Entities\Brand.cs" />
+    <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\Section.cs" />
+    <Compile Include="ProductFilter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
