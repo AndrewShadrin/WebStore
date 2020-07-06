@@ -28,6 +28,7 @@ namespace WebStore
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddScoped<IEmployeesData, InMemoryEmployesData>();
+            services.AddScoped<IProductData, InMemoryProductData>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -41,7 +42,7 @@ namespace WebStore
             app.UseDefaultFiles();
 
             app.UseRouting();
-
+            
             //app.UseMiddleware<TestMiddleware>();
 
             app.UseEndpoints(endpoints =>
