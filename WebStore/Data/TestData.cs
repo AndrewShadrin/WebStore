@@ -419,6 +419,6 @@ namespace WebStore.Data
                     SectionId = 25,
                     BrandId = 3
                 },
-        }
+        };
     }
 }
