@@ -1,25 +1,28 @@
-﻿@model WebStore.Models.Employee
+﻿@model EmployeesViewModel
 
     <div class="container">
         <h3>Сотрудник</h3>
         <dl class="dl-horizontal">
-            <dt>Id</dt>
+            <dt><label asp-for="Id"></label></dt>
             <dd>@Model.Id</dd>
 
-            <dt>Фамилия</dt>
-            <dd>@Model.Surname</dd>
+            <dt><label asp-for="LastName"></label></dt>
+            <dd>@Model.LastName</dd>
 
-            <dt>Имя</dt>
-            <dd>@Model.Name</dd>
+            <dt><label asp-for="FirstName"></label></dt>
+            <dd>@Model.FirstName</dd>
 
-            <dt>Отчество</dt>
+            <dt><label asp-for="Patronymic"></label></dt>
             <dd>@Model.Patronymic</dd>
 
-            <dt>Возраст</dt>
+            <dt><label asp-for="Age"></label></dt>
             <dd>@Model.Age</dd>
+
+            <dt><label asp-for="EmploymentDate"></label></dt>
+            <dd>@Model.EmploymentDate</dd>
         </dl>
         <hr />
-        <a asp-controller="Employees" asp-action="Index" class="btn btn-primary">К списку сотрудников</a>
+        <a asp-controller="Employees" asp-action="Index" class="btn btn-default">К списку сотрудников</a>
         <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Удалить</a>
         <br />
     </div>

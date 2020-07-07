@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebStore.Models.Employee>
+﻿@model IEnumerable<EmployeesViewModel>
 
     <div class="container">
         <h3>Сотрудники</h3>
@@ -13,6 +13,7 @@
                     <th>Имя</th>
                     <th>Отчество</th>
                     <th>Возраст</th>
+                    <th>Дата приема на работу</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -26,10 +27,11 @@
                                 <i class="fa fa-info"></i>
                             </a></td>
                         <td>@employee.Id</td>
-                        <td>@employee.Surname</td>
-                        <td>@employee.Name</td>
+                        <td>@employee.LastName</td>
+                        <td>@employee.FirstName</td>
                         <td>@employee.Patronymic</td>
                         <td>@employee.Age</td>
+                        <td>@employee.EmploymentDate</td>
                         <td><a asp-controller="Employees" asp-action="Edit" asp-route-id="@employee.Id"
                                class="btn btn-sm btn-default">
                                 <i class="fa fa-edit"></i>
