@@ -1,14 +1,15 @@
-﻿<partial name="Partial/_Advertisement"/>
+﻿@model CatalogViewModel
+<partial name="Partial/_Advertisement"/>
 
 <section>
     <div class="container">
         <div class="row">
             <div class="col-sm-3">
-                <partial name="_LeftSideBar"/>
+                <partial name="Partial/_LeftSideBar"/>
             </div>
 
             <div class="col-sm-9 padding-right">
-                <partial name="_FeaturesItems"/>
+                <partial name="Partial/_FeaturesItems" model="@Model.Products"/>
             </div>
         </div>
     </div>
