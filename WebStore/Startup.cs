@@ -13,7 +13,8 @@ using WebStore.DAL.Context;
 using WebStore.Data;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Infrastructure.Middleware;
-using WebStore.Infrastructure.Services;
+using WebStore.Infrastructure.Services.InMemory;
+using WebStore.Infrastructure.Services.InSQL;
 
 namespace WebStore
 {
@@ -34,7 +35,8 @@ namespace WebStore
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddScoped<IEmployeesData, InMemoryEmployesData>();
-            services.AddScoped<IProductData, InMemoryProductData>();
+            //services.AddScoped<IProductData, InMemoryProductData>();
+            services.AddScoped<IProductData, SQLProductData>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WebStoreDBInitializer db)
