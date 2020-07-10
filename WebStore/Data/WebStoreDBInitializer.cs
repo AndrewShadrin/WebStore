@@ -62,6 +62,69 @@ namespace WebStore.Data
                 db.CommitTransaction();
             }
 
+            //var products = TestData.Products;
+            //var sections = TestData.Sections;
+            //var brands = TestData.Brands;
+
+            //var products_section = products.Join(
+            //    sections, 
+            //    p => p.SectionId, 
+            //    s => s.Id, 
+            //    (product, section) => (product, section));
+
+            //foreach (var (product, section) in products_section)
+            //{
+            //    product.Section = section;
+            //    product.SectionId = 0;
+            //}
+
+            //var products_brand = products.Join(
+            //    brands, 
+            //    p => p.SectionId, 
+            //    b => b.Id, 
+            //    (product, brand) => (product, brand));
+
+            //foreach (var (product, brand) in products_brand)
+            //{
+            //    product.Brand = brand;
+            //    product.BrandId= null;
+            //}
+
+            //foreach (var product in products)
+            //{
+            //    product.Id = 0;
+            //}
+
+            //var child_sections = sections.Join(
+            //    sections,
+            //    child => child.ParentId,
+            //    parent => parent.Id,
+            //    (child, parent) => (child, parent));
+
+            //foreach (var (child, parent) in child_sections)
+            //{
+            //    child.ParentSection = parent;
+            //    child.ParentId = null;
+            //}
+
+            //foreach (var section in sections)
+            //{
+            //    section.Id = 0;
+            //}
+
+            //foreach (var brand in brands)
+            //{
+            //    brand.Id = 0;
+            //}
+
+            //using (db.BeginTransaction())
+            //{
+            //    dB.Sections.AddRange(sections);
+            //    dB.Brands.AddRange(brands);
+            //    dB.Products.AddRange(products);
+            //    dB.SaveChanges();
+            //    db.CommitTransaction();
+            //}
         }
     }
 }
