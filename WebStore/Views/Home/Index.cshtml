@@ -3,14 +3,7 @@
     var products = ProductData
         .GetProducts()
         .Take(6)
-        .Select(p => new ProductViewModel
-        {
-            Id = p.Id,
-            Name = p.Name,
-            Order = p.Order,
-            ImageUrl = p.ImageUrl,
-            Price = p.Price
-        })
+        .ToView()
         .OrderBy(p => p.Order);
 }
 <partial name="Partial/_Slider"/>
