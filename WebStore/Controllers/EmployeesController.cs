@@ -3,7 +3,6 @@ using System;
 using System.Linq;
 using WebStore.Infrastructure.Interfaces;
 using WebStore.Infrastructure.Mapping;
-using WebStore.Models;
 using WebStore.ViewModels;
 
 namespace WebStore.Controllers
