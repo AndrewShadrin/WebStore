@@ -67,8 +67,8 @@
       "destination": "wwwroot/lib/scrollup/"
     },
     {
-      "library": "animate.css@4.1.0",
-      "destination": "wwwroot/lib/animate.css/"
+      "library": "animateCSS@1.2.2",
+      "destination": "wwwroot/lib/animateCSS/"
     }
   ]
 }

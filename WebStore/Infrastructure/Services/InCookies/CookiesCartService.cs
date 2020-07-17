@@ -16,7 +16,7 @@ namespace WebStore.Infrastructure.Services.InCookies
     public class CookiesCartService : ICartService
     {
         private readonly IProductData productData;
-        private readonly HttpContextAccessor httpContextAccessor;
+        private readonly IHttpContextAccessor httpContextAccessor;
         private readonly string cartName;
 
         public Cart Cart
@@ -45,7 +45,7 @@ namespace WebStore.Infrastructure.Services.InCookies
             cookies.Append(cartName, cookie);
         }
 
-        public CookiesCartService(IProductData productData, HttpContextAccessor httpContextAccessor)
+        public CookiesCartService(IProductData productData, IHttpContextAccessor httpContextAccessor)
         {
             this.productData = productData;
             this.httpContextAccessor = httpContextAccessor;

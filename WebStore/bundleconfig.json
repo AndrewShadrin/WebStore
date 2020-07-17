@@ -3,7 +3,7 @@
     "outputFileName": "wwwroot/css/site.css",
     "inputFiles": [
       //"wwwroot/css/animate.css",
-      "wwwroot/css/responsive.css",
+      //"wwwroot/css/responsive.css",
       "wwwroot/css/main.css",
       "wwwroot/css/price-range.css"
     ]
