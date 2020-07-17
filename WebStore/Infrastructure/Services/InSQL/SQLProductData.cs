@@ -47,5 +47,13 @@ namespace WebStore.Infrastructure.Services.InSQL
 
             return query;/*ToArray*/
         }
+
+        public Product GetProductById(int id)
+        {
+            return dB.Products
+                .Include(product => product.Brand)
+                .Include(product => product.Section)
+                .FirstOrDefault(product => product.Id == id);
+        }
     }
 }

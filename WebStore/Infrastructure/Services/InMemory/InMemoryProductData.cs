@@ -14,6 +14,8 @@ namespace WebStore.Infrastructure.Services.InMemory
             return TestData.Brands;
         }
 
+        public Product GetProductById(int id) => TestData.Products.FirstOrDefault(p => p.Id == id);
+
         public IEnumerable<Product> GetProducts(ProductFilter filter = null)
         {
             var query = TestData.Products;
