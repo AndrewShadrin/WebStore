@@ -5,8 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using WebStore.Domain;
 using WebStore.Domain.Entities;
 using WebStore.Infrastructure.Interfaces;
+using WebStore.Infrastructure.Mapping;
 using WebStore.ViewModels;
 
 namespace WebStore.Infrastructure.Services.InCookies
@@ -109,7 +111,17 @@ namespace WebStore.Infrastructure.Services.InCookies
 
         public CartViewModel TransformFromCart()
         {
-            throw new NotImplementedException();
+            var products = productData.GetProducts(new ProductFilter
+            {
+                Ids = Cart.Items.Select(item => item.ProductId).ToArray()
+            });
+
+            var productsViewModels = products.ToView().ToDictionary(p => p.Id);
+
+            return new CartViewModel
+            {
+                Items = Cart.Items.Select(item => (productsViewModels[item.ProductId], item.Quantity))
+            };
         }
     }
 }

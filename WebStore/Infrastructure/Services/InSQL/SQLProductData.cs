@@ -35,14 +35,21 @@ namespace WebStore.Infrastructure.Services.InSQL
                 .Include(product => product.Brand)
                 .Include(product => product.Section);
 
-            if (filter?.BrandId != null)
+            if (filter?.Ids?.Length > 0)
             {
-                query = query.Where(product => product.BrandId == filter.BrandId);
+                query = query.Where(product => filter.Ids.Contains(product.Id));
             }
-
-            if (filter?.SectionId != null)
+            else
             {
-                query = query.Where(product => product.SectionId == filter.SectionId);
+                if (filter?.BrandId != null)
+                {
+                    query = query.Where(product => product.BrandId == filter.BrandId);
+                }
+
+                if (filter?.SectionId != null)
+                {
+                    query = query.Where(product => product.SectionId == filter.SectionId);
+                }
             }
 
             return query;/*ToArray*/
