@@ -12,14 +12,22 @@
 <body>
 
     <div id="wrapper">
-        <partial name="Partial/_Header"/>
-        <partial name="Partial/_ASite"/>
-        @RenderBody()
+        <partial name="Partial/_Header" />
+        <partial name="Partial/_ASite" />
+
+        <div id="page-wrapper">
+            <div id="page-inner">
+                @RenderBody()
+            </div>
+            <!-- /. PAGE INNER  -->
+        </div>
+        <!-- /. PAGE WRAPPER  -->
+
     </div>
-    
-    <partial name="Partial/_Footer"/>
-    
-    <partial name="Partial/_Scripts"/>
+
+    <partial name="Partial/_Footer" />
+
+    <partial name="Partial/_Scripts" />
 
     @await RenderSectionAsync("Scripts", false)
 </body>
