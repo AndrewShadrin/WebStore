@@ -34,9 +34,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Controllers\" />
-    <Folder Include="Areas\Views\" />
-    <Folder Include="Areas\Models\" />
+    <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Models\" />
   </ItemGroup>
 
 </Project>
