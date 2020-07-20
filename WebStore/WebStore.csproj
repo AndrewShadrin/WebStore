@@ -33,4 +33,10 @@
     <ProjectReference Include="..\WebStore.Domain1\WebStore.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Controllers\" />
+    <Folder Include="Areas\Views\" />
+    <Folder Include="Areas\Models\" />
+  </ItemGroup>
+
 </Project>
