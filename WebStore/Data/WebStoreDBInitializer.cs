@@ -1,19 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebStore.DAL.Context;
+using WebStore.Domain.Entities.Identity;
 
 namespace WebStore.Data
 {
     public class WebStoreDBInitializer
     {
         private readonly WebStoreDB dB;
+        private readonly UserManager<User> userManager;
+        private readonly RoleManager<Role> roleManager;
 
-        public WebStoreDBInitializer(WebStoreDB dB)
+        public WebStoreDBInitializer(WebStoreDB dB, UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             this.dB = dB;
+            this.userManager = userManager;
+            this.roleManager = roleManager;
         }
 
         public void Initialize()
@@ -32,6 +38,36 @@ namespace WebStore.Data
 
             InitializeProducts();
             InitializeEmployees();
+            InitializeIdentityAsync().Wait();
+        }
+
+        private async Task InitializeIdentityAsync()
+        {
+            async Task CheckRoleExist(string roleName)
+            {
+                if (!await roleManager.RoleExistsAsync(roleName))
+                {
+                    await roleManager.CreateAsync(new Role { Name = roleName });
+                }
+            }
+
+            await CheckRoleExist(Role.Administrator);
+            await CheckRoleExist(Role.User);
+
+            if (await userManager.FindByNameAsync(User.Administrator) is null)
+            {
+                var admin = new User { UserName = User.Administrator };
+                var creationResult = await userManager.CreateAsync(admin, User.DefaultAdminPassword);
+                if (creationResult.Succeeded)
+                {
+                    await userManager.AddToRoleAsync(admin, Role.Administrator);
+                }
+                else
+                {
+                    var errors = creationResult.Errors.Select(e => e.Description);
+                    throw new InvalidOperationException($"Ошибка при создании пользователя Администратор: {string.Join(", ", errors)}");
+                }
+            }
         }
 
         private void InitializeProducts()

@@ -47,10 +47,6 @@
       "destination": "wwwroot/lib/prettyPhoto/"
     },
     {
-      "library": "animateCSS@1.2.2",
-      "destination": "wwwroot/lib/animateCSS/"
-    },
-    {
       "library": "responsive@1.0.5",
       "destination": "wwwroot/lib/responsive/"
     },
@@ -69,6 +65,10 @@
     {
       "library": "scrollup@2.4.1",
       "destination": "wwwroot/lib/scrollup/"
+    },
+    {
+      "library": "animateCSS@1.2.2",
+      "destination": "wwwroot/lib/animateCSS/"
     }
   ]
 }
