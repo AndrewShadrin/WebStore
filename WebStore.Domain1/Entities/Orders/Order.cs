@@ -13,7 +13,7 @@ namespace WebStore.Domain.Entities.Orders
 
         public string Phone { get; set; }
 
-        public string Adress { get; set; }
+        public string Address { get; set; }
 
         public DateTime Date { get; set; }
 

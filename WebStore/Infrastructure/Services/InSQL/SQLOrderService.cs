@@ -36,7 +36,7 @@ namespace WebStore.Infrastructure.Services.InSQL
                 var order = new Order
                 {
                     Name = orderModel.Name,
-                    Adress = orderModel.Adress,
+                    Address = orderModel.Adress,
                     Phone = orderModel.Phone,
                     Date = DateTime.Now,
                     User = user
