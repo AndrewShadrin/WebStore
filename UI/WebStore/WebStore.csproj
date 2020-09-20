@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Services\WebStore.DAL\WebStore.DAL.csproj" />
+    <ProjectReference Include="..\..\Services\WebStore.Interfaces\WebStore.Interfaces.csproj" />
   </ItemGroup>
 
   <ItemGroup>
