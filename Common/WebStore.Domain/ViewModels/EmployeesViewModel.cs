@@ -1,18 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace WebStore.ViewModels
+namespace WebStore.Domain.ViewModels
 {
     public class EmployeesViewModel //: IValidatableObject
     {
         [HiddenInput(DisplayValue = false)]
         public int Id { get; set; }
 
-        [Display(Name ="Имя")]
+        [Display(Name = "Имя")]
         [Required(ErrorMessage = "Имя является обязательным")]
         [StringLength(200, ErrorMessage = "Длина строки имени должна быть от 3 до 200 символов")]
         [RegularExpression(@"([А-ЯЁ][а-яё]+)|([A-Z][a-z]+)", ErrorMessage = "Ошибка формата. Только русские или латиница. Никаких цифр!")]
@@ -33,6 +30,6 @@ namespace WebStore.ViewModels
 
         [Display(Name = "Дата приема на работу")]
         [DataType(DataType.DateTime)]
-        public DateTime EmploymentDate { get; set;}
+        public DateTime EmploymentDate { get; set; }
     }
 }
