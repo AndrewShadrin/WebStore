@@ -1,17 +1,13 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Threading.Tasks;
 using WebStore.Domain;
 using WebStore.Domain.Entities;
 using WebStore.Domain.ViewModels;
-using WebStore.Infrastructure.Mapping;
 using WebStore.Interfaces.Services;
+using WebStore.Services.Mapping;
 
-namespace WebStore.Infrastructure.Services.InCookies
+namespace WebStore.Services.Products.InCookies
 {
     public class CookiesCartService : ICartService
     {
@@ -21,7 +17,7 @@ namespace WebStore.Infrastructure.Services.InCookies
 
         public Cart Cart
         {
-            get 
+            get
             {
                 var context = httpContextAccessor.HttpContext;
                 var cookies = context.Response.Cookies;
@@ -67,7 +63,7 @@ namespace WebStore.Infrastructure.Services.InCookies
             {
                 item.Quantity++;
             }
-            
+
             Cart = cart;
         }
 
