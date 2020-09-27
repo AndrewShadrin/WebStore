@@ -5,10 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebStore.DAL.Context;
+using WebStore.Domain.DTO.Orders;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Domain.Entities.Orders;
-using WebStore.Domain.ViewModels;
 using WebStore.Interfaces.Services;
+using WebStore.Services.Mapping;
 
 namespace WebStore.Services.Products.InSQL
 {
@@ -23,7 +24,7 @@ namespace WebStore.Services.Products.InSQL
             this.userManager = userManager;
         }
 
-        public async Task<Order> CreateOrder(string userName, CartViewModel cart, OrderViewModel orderModel)
+        public async Task<OrderDTO> CreateOrder(string userName, CreateOrderModel orderModel)
         {
             var user = await userManager.FindByNameAsync(userName);
             if (user is null)
@@ -35,16 +36,16 @@ namespace WebStore.Services.Products.InSQL
             {
                 var order = new Order
                 {
-                    Name = orderModel.Name,
-                    Address = orderModel.Adress,
-                    Phone = orderModel.Phone,
+                    Name = orderModel.Order.Name,
+                    Address = orderModel.Order.Adress,
+                    Phone = orderModel.Order.Phone,
                     Date = DateTime.Now,
                     User = user
                 };
 
-                foreach (var (productModel, quantity) in cart.Items)
+                foreach (var item in orderModel.Items)
                 {
-                    var product = await dB.Products.FindAsync(productModel.Id);
+                    var product = await dB.Products.FindAsync(item.Id);
                     if (product is null)
                     {
                         continue;
@@ -54,7 +55,7 @@ namespace WebStore.Services.Products.InSQL
                     {
                         Order = order,
                         Product = product,
-                        Quantity = quantity,
+                        Quantity = item.Quantity,
                         Price = product.Price
                     };
                     order.Items.Add(orderItem);
@@ -63,24 +64,24 @@ namespace WebStore.Services.Products.InSQL
                 await dB.SaveChangesAsync();
                 await transaction.CommitAsync();
 
-                return order;
+                return order.ToDTO();
             }
         }
 
-        public async Task<Order> GetOrderById(int id)
+        public async Task<OrderDTO> GetOrderById(int id)
         {
-            return await dB.Orders
+            return (await dB.Orders
                 .Include(order => order.User)
-                .FirstOrDefaultAsync(order => order.Id == id);
+                .FirstOrDefaultAsync(order => order.Id == id)).ToDTO();
         }
 
-        public async Task<IEnumerable<Order>> GetUserOrders(string userName)
+        public async Task<IEnumerable<OrderDTO>> GetUserOrders(string userName)
         {
-            return await dB.Orders
+            return (await dB.Orders
                 .Include(order => order.User)
                 .Include(order => order.Items)
                 .Where(order => order.User.UserName == userName)
-                .ToArrayAsync();
+                .ToArrayAsync()).Select(o => o.ToDTO());
         }
     }
 }
