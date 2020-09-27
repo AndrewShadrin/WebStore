@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using WebStore.Clients.Employees;
+using WebStore.Clients.Products;
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Interfaces.Services;
@@ -69,9 +70,10 @@ namespace WebStore
                 services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddScoped<IEmployeesData, EmployeesClient>();
-            services.AddScoped<IProductData, SQLProductData>();
-            services.AddScoped<ICartService, CookiesCartService>();
+            services.AddScoped<IProductData, ProductsClient>();
+
             services.AddScoped<IOrderService, SQLOrderService>();
+            services.AddScoped<ICartService, CookiesCartService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WebStoreDBInitializer db)
