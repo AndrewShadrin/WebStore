@@ -1,7 +1,7 @@
 ﻿@inject WebStore.Interfaces.Services.IProductData ProductData
 @{ 
     var products = ProductData
-        .GetProducts()
+        .GetProducts().FromDTO()
         .Take(6)
         .ToView()
         .OrderBy(p => p.Order);
