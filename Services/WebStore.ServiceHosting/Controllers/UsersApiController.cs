@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using WebStore.DAL.Context;
 using WebStore.Domain;
 using WebStore.Domain.Entities.Identity;
@@ -15,5 +18,8 @@ namespace WebStore.ServiceHosting.Controllers
         {
             userStore = new UserStore<User, Role, WebStoreDB>(dB);
         }
+
+        [HttpGet("all")]
+        public async Task<IEnumerable<User>> GetAllUsers() => await userStore.Users.ToArrayAsync();
     }
 }
