@@ -21,5 +21,49 @@ namespace WebStore.ServiceHosting.Controllers
 
         [HttpGet("all")]
         public async Task<IEnumerable<User>> GetAllUsers() => await userStore.Users.ToArrayAsync();
+
+        [HttpPost("UserId")]
+        public async Task<string> GetUserIdAsync([FromBody] User user) => await userStore.GetUserIdAsync(user);
+
+        [HttpPost("UserName")]
+        public async Task<string> GetUserNameAsync([FromBody] User user) => await userStore.GetUserNameAsync(user);
+
+        [HttpPost("UserName/{name}")]
+        public async Task SetUserNameAsync([FromBody] User user, string name)
+        {
+            await userStore.SetUserNameAsync(user, name);
+            await userStore.UpdateAsync(user);
+        }
+
+        [HttpPost("NormalUserName")]
+        public async Task<string> GetNormalizedUserNameAsync([FromBody] User user) => await userStore.GetNormalizedUserNameAsync(user);
+        
+        [HttpPost("NormalUserName/{name}")]
+        public async Task SetNormalizedUserNameAsync([FromBody] User user, string name)
+        {
+            await userStore.SetNormalizedUserNameAsync(user, name);
+            await userStore.UpdateAsync(user);
+        }
+
+        [HttpPost("User")]
+        public async Task<bool> CreateAsync([FromBody] User user)
+        {
+            var result = await userStore.CreateAsync(user);
+            return result.Succeeded;
+        }
+
+        [HttpPost("User")]
+        public async Task<bool> UpdateAsync([FromBody] User user)
+        {
+            var result = await userStore.UpdateAsync(user);
+            return result.Succeeded;
+        }
+
+        [HttpPost("User")]
+        public async Task<bool> DeleteAsync([FromBody] User user)
+        {
+            var result = await userStore.DeleteAsync(user);
+            return result.Succeeded;
+        }
     }
 }
