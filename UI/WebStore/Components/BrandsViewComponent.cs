@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using WebStore.Domain.ViewModels;
 using WebStore.Interfaces.Services;
+using WebStore.Domain.DTO.Products;
 
 namespace WebStore.Components
 {

@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using WebStore.DAL.Context;
 using WebStore.Domain;
+using WebStore.Domain.DTO.Products;
 using WebStore.Domain.Entities;
 using WebStore.Interfaces.Services;
+using WebStore.Services.Mapping;
 
 namespace WebStore.Services.Products.InSQL
 {
@@ -18,17 +20,17 @@ namespace WebStore.Services.Products.InSQL
             this.dB = dB;
         }
 
-        public IEnumerable<Brand> GetBrands()
+        public IEnumerable<BrandDTO> GetBrands()
         {
-            return dB.Brands;
+            return dB.Brands.ToDTO();
         }
 
-        public IEnumerable<Section> GetSections()
+        public IEnumerable<SectionDTO> GetSections()
         {
-            return dB.Sections;
+            return dB.Sections.ToDTO();
         }
 
-        public IEnumerable<Product> GetProducts(ProductFilter filter = null)
+        public IEnumerable<ProductDTO> GetProducts(ProductFilter filter = null)
         {
             IQueryable<Product> query = dB.Products
                 .Include(product => product.Brand)
@@ -51,15 +53,16 @@ namespace WebStore.Services.Products.InSQL
                 }
             }
 
-            return query;/*ToArray*/
+            return query.AsEnumerable().ToDTO();/*ToArray*/
         }
 
-        public Product GetProductById(int id)
+        public ProductDTO GetProductById(int id)
         {
             return dB.Products
                 .Include(product => product.Brand)
                 .Include(product => product.Section)
-                .FirstOrDefault(product => product.Id == id);
+                .FirstOrDefault(product => product.Id == id)
+                .ToDTO();
         }
     }
 }

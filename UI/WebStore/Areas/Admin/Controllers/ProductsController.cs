@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebStore.Domain.Entities;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Interfaces.Services;
+using WebStore.Services.Mapping;
 
 namespace WebStore.Areas.Admin.Controllers
 {
@@ -21,10 +18,7 @@ namespace WebStore.Areas.Admin.Controllers
             this.productData = productData;
         }
 
-        public IActionResult Index()
-        {
-            return View(productData.GetProducts());
-        }
+        public IActionResult Index() => View(productData.GetProducts().FromDTO());
 
         public IActionResult Edit(int id)
         {
@@ -34,7 +28,7 @@ namespace WebStore.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            return View(product);
+            return View(product.FromDTO());
         }
 
         [HttpPost]
@@ -56,7 +50,7 @@ namespace WebStore.Areas.Admin.Controllers
             {
                 return NotFound();
             }
-            return View(product);
+            return View(product.FromDTO());
         }
 
         [HttpPost]

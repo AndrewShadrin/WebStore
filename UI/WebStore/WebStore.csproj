@@ -6,9 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Admin\Data\**" />
+    <Compile Remove="Areas\Admin\Models\**" />
     <Compile Remove="Models\**" />
+    <Content Remove="Areas\Admin\Data\**" />
+    <Content Remove="Areas\Admin\Models\**" />
     <Content Remove="Models\**" />
+    <EmbeddedResource Remove="Areas\Admin\Data\**" />
+    <EmbeddedResource Remove="Areas\Admin\Models\**" />
     <EmbeddedResource Remove="Models\**" />
+    <None Remove="Areas\Admin\Data\**" />
+    <None Remove="Areas\Admin\Models\**" />
     <None Remove="Models\**" />
   </ItemGroup>
 
@@ -30,14 +38,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\WebStore.Domain\WebStore.Domain.csproj" />
+    <ProjectReference Include="..\..\Services\WebStore.Clients\WebStore.Clients.csproj" />
     <ProjectReference Include="..\..\Services\WebStore.DAL\WebStore.DAL.csproj" />
     <ProjectReference Include="..\..\Services\WebStore.Interfaces\WebStore.Interfaces.csproj" />
+    <ProjectReference Include="..\..\Services\WebStore.ServiceHosting\WebStore.ServiceHosting.csproj" />
     <ProjectReference Include="..\..\Services\WebStore.Services\WebStore.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="wwwroot\Admin\" />
   </ItemGroup>
 
