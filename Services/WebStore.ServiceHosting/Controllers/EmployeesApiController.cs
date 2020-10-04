@@ -6,6 +6,9 @@ using WebStore.Interfaces.Services;
 
 namespace WebStore.ServiceHosting.Controllers
 {
+    /// <summary>
+    /// API управления сотрудниками
+    /// </summary>
     //[Route("api/employees")]
     [Route(WebApi.Employees)]
     [Produces("application/json")]
@@ -19,18 +22,32 @@ namespace WebStore.ServiceHosting.Controllers
             this.employeesData = employeesData;
         }
 
+        /// <summary>
+        /// Получить всех доступных сотрудников
+        /// </summary>
+        /// <returns>Список сотрудников</returns>
         [HttpGet]
         public IEnumerable<Employee> Get()
         {
             return employeesData.Get();
         }
 
+        /// <summary>
+        /// Найти сотрудника по идентификатору
+        /// </summary>
+        /// <param name="id">Идентификатор искомого сотрудника</param>
+        /// <returns>Найденный сотрудник</returns>
         [HttpGet("{id}")]
         public Employee GetById(int id)
         {
             return employeesData.GetById(id);
         }
 
+        /// <summary>
+        /// Добавление нового сотрудника
+        /// </summary>
+        /// <param name="employee">Новый сотрудник</param>
+        /// <returns>Идентификатор добавленного сотрудника</returns>
         [HttpPost]
         public int Add(Employee employee)
         {
@@ -39,6 +56,10 @@ namespace WebStore.ServiceHosting.Controllers
             return id;
         }
 
+        /// <summary>
+        /// Редактирование сотрудника
+        /// </summary>
+        /// <param name="employee">Сотрудник для редактирования</param>
         [HttpPut]
         public void Edit(Employee employee)
         {
@@ -46,6 +67,11 @@ namespace WebStore.ServiceHosting.Controllers
             SaveChanges();
         }
 
+        /// <summary>
+        /// Удаление сотрудника
+        /// </summary>
+        /// <param name="id">Идентификатор удаляемого сотрудника</param>
+        /// <returns>Истина, если удаление успешно</returns>
         [HttpDelete("{id}")]
         public bool Delete(int id)
         {
