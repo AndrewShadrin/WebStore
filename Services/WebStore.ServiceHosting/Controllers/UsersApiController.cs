@@ -58,14 +58,14 @@ namespace WebStore.ServiceHosting.Controllers
             return result.Succeeded;
         }
 
-        [HttpPost("User")]
+        [HttpPut("User")]
         public async Task<bool> UpdateAsync([FromBody] User user)
         {
             var result = await userStore.UpdateAsync(user);
             return result.Succeeded;
         }
 
-        [HttpPost("User")]
+        [HttpPost("User/Delete")]
         public async Task<bool> DeleteAsync([FromBody] User user)
         {
             var result = await userStore.DeleteAsync(user);
@@ -190,7 +190,7 @@ namespace WebStore.ServiceHosting.Controllers
         [HttpPost("GetNormalizedEmail")]
         public async Task<string> GetNormalizedEmailAsync([FromBody] User user) => await userStore.GetNormalizedEmailAsync(user);
 
-        [HttpPost("SetNormalizedEmail/{email}")]
+        [HttpPost("SetNormalizedEmail/{email?}")]
         public async Task SetNormalizedEmailAsync([FromBody] User user, string email)
         {
             await userStore.SetNormalizedEmailAsync(user, email);
@@ -266,7 +266,7 @@ namespace WebStore.ServiceHosting.Controllers
             await userStore.UpdateAsync(user);
         }
 
-        [HttpGet("GetAccessFailedCount")]
+        [HttpPost("GetAccessFailedCount")]
         public async Task<int> GetAccessFailedCountAsync([FromBody] User user) => await userStore.GetAccessFailedCountAsync(user);
 
         [HttpPost("GetLockoutEnabled")]
