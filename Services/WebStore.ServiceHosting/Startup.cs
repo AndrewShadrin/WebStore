@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using System.IO;
 using WebStore.DAL.Context;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Services.Data;
@@ -61,6 +62,20 @@ namespace WebStore.ServiceHosting
             services.AddSwaggerGen(opt =>
             {
                 opt.SwaggerDoc("v1", new OpenApiInfo { Title = "WebStore.API", Version = "v1" });
+
+                const string web_domain_xml = "WebStore.Domain.xml";
+                const string debug_path = "bin/debug/netcoreapp3.1";
+                
+                opt.IncludeXmlComments("WebStore.ServiceHosting.xml");
+
+                if (File.Exists(web_domain_xml))
+                {
+                    opt.IncludeXmlComments(web_domain_xml);
+                }
+                else if (File.Exists(Path.Combine(debug_path, web_domain_xml)))
+                {
+                    opt.IncludeXmlComments(Path.Combine(debug_path, web_domain_xml));
+                }
             });
 
             services.AddControllers();
