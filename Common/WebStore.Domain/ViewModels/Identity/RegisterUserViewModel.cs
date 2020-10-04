@@ -18,6 +18,5 @@ namespace WebStore.Domain.ViewModels.Identity
         [DataType(DataType.Password)]
         [Compare("Password")]
         public string PasswordConfirm { get; set; }
-
     }
 }
