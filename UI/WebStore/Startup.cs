@@ -13,6 +13,8 @@ using WebStore.Clients.Products;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Interfaces.Services;
 using WebStore.Services.Products.InCookies;
+using WebStore.Logger;
+using Microsoft.Extensions.Logging;
 
 namespace WebStore
 {
@@ -87,8 +89,9 @@ namespace WebStore
             services.AddScoped<ICartService, CookiesCartService>();
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFoctory)
         {
+            loggerFoctory.AddLog4Net();
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

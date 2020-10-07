@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Extensions.Logging;
+using System;
 using System.IO;
 using System.Reflection;
-using System.Text;
-using Microsoft.Extensions.Logging;
 
 namespace WebStore.Logger
 {
