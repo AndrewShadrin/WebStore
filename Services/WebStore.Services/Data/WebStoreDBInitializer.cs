@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,16 +14,20 @@ namespace WebStore.Services.Data
         private readonly WebStoreDB dB;
         private readonly UserManager<User> userManager;
         private readonly RoleManager<Role> roleManager;
+        private readonly ILogger<WebStoreDBInitializer> logger;
 
-        public WebStoreDBInitializer(WebStoreDB dB, UserManager<User> userManager, RoleManager<Role> roleManager)
+        public WebStoreDBInitializer(WebStoreDB dB, UserManager<User> userManager, RoleManager<Role> roleManager, ILogger<WebStoreDBInitializer> logger)
         {
             this.dB = dB;
             this.userManager = userManager;
             this.roleManager = roleManager;
+            this.logger = logger;
         }
 
         public void Initialize()
         {
+            logger.LogInformation("Инициализация БД...");
+
             var db = dB.Database;
 
             //if (db.EnsureDeleted())
@@ -33,11 +38,28 @@ namespace WebStore.Services.Data
             //    }
             //}
 
-            db.Migrate();
+            try
+            {
+                logger.LogInformation("Проведение миграций БД");
+                db.Migrate();
 
-            InitializeProducts();
-            InitializeEmployees();
-            InitializeIdentityAsync().Wait();
+                logger.LogInformation("Инициализация каталога товаров");
+                InitializeProducts();
+
+                logger.LogInformation("Инициализация каталога сотрудников");
+                InitializeEmployees();
+
+                logger.LogInformation("Инициализация данных системы Identity");
+                InitializeIdentityAsync().Wait();
+            }
+            catch (Exception error)
+            {
+                logger.LogCritical(new EventId(0), error, "Ошибка инициализации БД");
+
+                throw;
+            }
+            
+            logger.LogInformation("Инициализация БД выполнена успешно");
         }
 
         private async Task InitializeIdentityAsync()
@@ -46,6 +68,8 @@ namespace WebStore.Services.Data
             {
                 if (!await roleManager.RoleExistsAsync(roleName))
                 {
+                    logger.LogInformation("Добавление роли пользователей {0}", roleName);
+
                     await roleManager.CreateAsync(new Role { Name = roleName });
                 }
             }
@@ -59,7 +83,11 @@ namespace WebStore.Services.Data
                 var creationResult = await userManager.CreateAsync(admin, User.DefaultAdminPassword);
                 if (creationResult.Succeeded)
                 {
+                    logger.LogInformation("Пользователь {0} добавлен", User.Administrator);
+
                     await userManager.AddToRoleAsync(admin, Role.Administrator);
+
+                    logger.LogInformation("Пользователю {0} добавлена роль {1}", User.Administrator, Role.Administrator);
                 }
                 else
                 {
@@ -75,6 +103,8 @@ namespace WebStore.Services.Data
 
             if (dB.Products.Any())
             {
+                logger.LogInformation("Каталог товаров уже инициализирован");
+
                 return;
             }
 
@@ -174,6 +204,8 @@ namespace WebStore.Services.Data
         {
             if (dB.Employees.Any())
             {
+                logger.LogInformation("Раздел соторудников уже инициализирован");
+
                 return;
             }
 

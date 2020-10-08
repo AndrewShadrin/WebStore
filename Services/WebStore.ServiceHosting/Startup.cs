@@ -13,6 +13,8 @@ using WebStore.DAL.Context;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Services.Data;
 using WebStore.Services.Products;
+using WebStore.Logger;
+using Microsoft.Extensions.Logging;
 
 namespace WebStore.ServiceHosting
 {
@@ -82,8 +84,10 @@ namespace WebStore.ServiceHosting
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WebStoreDBInitializer dBInitializer)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, WebStoreDBInitializer dBInitializer, ILoggerFactory loggerFactory)
         {
+            loggerFactory.AddLog4Net();
+
             dBInitializer.Initialize();
 
             if (env.IsDevelopment())

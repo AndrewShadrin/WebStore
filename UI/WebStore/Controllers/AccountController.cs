@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
 using WebStore.Domain.Entities.Identity;
 using WebStore.Domain.ViewModels.Identity;
@@ -10,11 +13,13 @@ namespace WebStore.Controllers
     {
         private readonly UserManager<User> userManager;
         private readonly SignInManager<User> signInManager;
+        private readonly ILogger<AccountController> logger;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<AccountController> logger)
         {
             this.userManager = userManager;
             this.signInManager = signInManager;
+            this.logger = logger;
         }
 
         #region Процесс регистрации нового пользователя
@@ -29,24 +34,41 @@ namespace WebStore.Controllers
                 return View(model);
             }
 
-            var user = new User
+            using (logger.BeginScope("Регистрация пользователя {0}", model.UserName))
             {
-                UserName = model.UserName
-            };
+                logger.LogInformation("Начало регистрации нового пользователя {0}", model.UserName);
 
-            var registrationResult = await userManager.CreateAsync(user, model.Password);
-            if (registrationResult.Succeeded)
-            {
-                await userManager.AddToRoleAsync(user, Role.User);
+                var user = new User
+                {
+                    UserName = model.UserName
+                };
 
-                await signInManager.SignInAsync(user, false);
-                return RedirectToAction("Index", "Home");
+                var registrationResult = await userManager.CreateAsync(user, model.Password);
+                if (registrationResult.Succeeded)
+                {
+                    logger.LogInformation("Пользователь {0} успешно зарегистрирован", user.UserName);
+
+                    await userManager.AddToRoleAsync(user, Role.User);
+
+                    logger.LogInformation("Пользователь {0} наделен ролью {1}", user.UserName, Role.User);
+
+                    await signInManager.SignInAsync(user, false);
+
+                    logger.LogInformation("Пользователь {0} автоматически вошел в систему после регистрации", user.UserName);
+
+                    return RedirectToAction("Index", "Home");
+                }
+
+                logger.LogWarning("Ошибка при регистрации нового пользователя {0}\r\n{1}",
+                    model.UserName,
+                    string.Join(Environment.NewLine, registrationResult.Errors.Select(error => error.Description)));
+
+                foreach (var error in registrationResult.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
             }
 
-            foreach (var error in registrationResult.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
             return View(model);
         }
 
@@ -70,14 +92,21 @@ namespace WebStore.Controllers
                 model.RememberMe,
                 false);
 
+            logger.LogInformation("Попытка входа пользователя {0} в систему", model.UserName);
+
+
             if (loginResult.Succeeded)
             {
+                logger.LogInformation("Пользователь {0} успешно вошёл в систему", model.UserName);
+
                 if (Url.IsLocalUrl(model.ReturnUrl))
                 {
                     return Redirect(model.ReturnUrl);
                 }
                 return RedirectToAction("Index", "Home");
             }
+
+            logger.LogWarning("Ошибка имени пользователя или пароля при входе {0}", model.UserName);
 
             ModelState.AddModelError(string.Empty, "Неверное имя пользвателя или пароль!");
 
@@ -88,7 +117,10 @@ namespace WebStore.Controllers
 
         public async Task<IActionResult> Logout()
         {
+            var userName = User.Identity.Name;
             await signInManager.SignOutAsync();
+
+            logger.LogInformation("Пользователь {0} вышел из системы", userName);
 
             return RedirectToAction("Index", "Home");
         }
