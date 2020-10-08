@@ -15,6 +15,7 @@ using WebStore.Interfaces.Services;
 using WebStore.Services.Products.InCookies;
 using WebStore.Logger;
 using Microsoft.Extensions.Logging;
+using WebStore.Infrastructure.Middleware;
 
 namespace WebStore
 {
@@ -97,6 +98,8 @@ namespace WebStore
                 app.UseDeveloperExceptionPage();
                 app.UseBrowserLink();
             }
+
+            app.UseMiddleware<ErrorHandlingMiddleware>();
 
             app.UseStaticFiles();
             app.UseDefaultFiles();
